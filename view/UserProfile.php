@@ -1,9 +1,7 @@
-<?php include("../model/UserModel.php"); 
-	
-	if(isset($_SESSION['officeUserName']))
-	{
-		if ($_SESSION['empType'] == 2 || $_SESSION['empType'] == 1)
-	{
+<?php include("../model/UserModel.php");
+
+if (isset($_SESSION['officeUserName'])) {
+	if ($_SESSION['empType'] == 2 || $_SESSION['empType'] == 1) {
 ?>
 		<!DOCTYPE html>
 		<html lang="en">
@@ -25,7 +23,8 @@
 			<link href="../assets/css/simple-sidebar.css" rel="stylesheet">
 
 			<!-- Online FA CDN -->
-			<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+			<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+				integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
 
 			<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 			<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -33,15 +32,12 @@
 				<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
 				<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
 			<![endif]-->
-			
+
 			<script language=JavaScript>
-				
-				function reload(form)
-					{
-						var val=form.cat.options[form.cat.options.selectedIndex].value;
-						self.location='ListDesignation.php?cat=' + val ;
-					}
-					
+				function reload(form) {
+					var val = form.cat.options[form.cat.options.selectedIndex].value;
+					self.location = 'ListDesignation.php?cat=' + val;
+				}
 			</script>
 
 		</head>
@@ -59,28 +55,29 @@
 						<li>
 							<a href="UserProfile.php" style="color:#DAA520;"><i class="fas fa-user-circle"></i> User Profile</a>
 						</li>
-							<?php
-							$objLeaveApplication = new User();
-							$result = $objLeaveApplication->getForRecomandationNumber();
-							while($row = mysqli_fetch_array($result))
-							{ 
-							?>
-						<li>
-							<a href="Applications.php"><i class="fas fa-sign-out-alt"></i> Applications <span style="color:red"><?php if($row['COUNT(lIsRecomanded)'] != 0){ ?>[ New <?php echo $row['COUNT(lIsRecomanded)']; ?> ]<?php } ?></span></a>
-						</li>
-							<?php
-							}
-							$objLeaveApplication = new User();
-							$result = $objLeaveApplication->getRecomandationNumber();
-							while($row = mysqli_fetch_array($result))
-							{ 
-							?>
-						<li>
-							<a href="RecomandedApplications.php"><i class="fas fa-share"></i> Recommended Applications<span style="color:red"><?php if($row['COUNT(lIsRecomanded)'] != 0){ ?><?php echo $row['COUNT(lIsRecomanded)']; ?><?php } ?></span></a>
-						</li>
-							<?php
-							}
-							?>
+						<?php
+						$objLeaveApplication = new User();
+						$result = $objLeaveApplication->getForRecomandationNumber();
+						while ($row = mysqli_fetch_array($result)) {
+						?>
+							<li>
+								<a href="Applications.php"><i class="fas fa-sign-out-alt"></i> Applications <span
+										style="color:red"><?php if ($row['COUNT(lIsRecomanded)'] != 0) { ?>[ New
+										<?php echo $row['COUNT(lIsRecomanded)']; ?> ]<?php } ?></span></a>
+							</li>
+						<?php
+						}
+						$objLeaveApplication = new User();
+						$result = $objLeaveApplication->getRecomandationNumber();
+						while ($row = mysqli_fetch_array($result)) {
+						?>
+							<li>
+								<a href="RecomandedApplications.php"><i class="fas fa-share"></i> Recommended Applications<span
+										style="color:red"><?php if ($row['COUNT(lIsRecomanded)'] != 0) { ?><?php echo $row['COUNT(lIsRecomanded)']; ?><?php } ?></span></a>
+							</li>
+						<?php
+						}
+						?>
 						<li>
 							<a href="AddDepartment.php"><i class="fas fa-plus"></i> Add Department</a>
 						</li>
@@ -117,27 +114,27 @@
 					<div class="container-fluid">
 						<div class="row">
 							<div class="col-lg-12">
-							
-								<a href="#menu-toggle" class="btn btn-primary" id="menu-toggle"><i class="fas fa-exchange-alt"></i> Menu Bar</a>
+
+								<a href="#menu-toggle" class="btn btn-primary" id="menu-toggle"><i
+										class="fas fa-exchange-alt"></i> Menu Bar</a>
 								<h1 align="center">User Profile</h1>
-								
+
 								<form class="form-group" role="form" action="../controller/UserController.php" method="post">
-									
+
 									<?php
 									$objLeaveApplication = new User();
 									$livHistory = $objLeaveApplication->getAllleaveHistory();
-									while($historyForLeave = mysqli_fetch_array($livHistory))
-									{
-										echo "<br/><span style='color:#DAA520;' class='glyphicon glyphicon-road'></span> You were in Leave from <b style='color:#DAA520;'>".$historyForLeave['lLeaveFromDate']."</b> To <b style='color:#DAA520;'>".$historyForLeave['lLeaveToDate']."</b>. Total <b style='color:#DAA520;'>".$historyForLeave['lTotalLeaveDays']."</b> Days.<br/>";
+									while ($historyForLeave = mysqli_fetch_array($livHistory)) {
+										echo "<br/><span style='color:#DAA520;' class='glyphicon glyphicon-road'></span> You were on Leave from <b style='color:#DAA520;'>" . $historyForLeave['lLeaveFromDate'] . "</b> To <b style='color:#DAA520;'>" . $historyForLeave['lLeaveToDate'] . "</b>. Total <b style='color:#DAA520;'>" . $historyForLeave['lTotalLeaveDays'] . "</b> Days.<br/>";
 									}
 									?>
-									
+
 									<div class="table-responsive">
-									
+
 										<table class="table table-bordered table-hover table-striped">
-										
+
 											<thead>
-											
+
 												<tr class="success">
 													<th>Leave Name</th>
 													<th>CL</th>
@@ -150,11 +147,11 @@
 													<th>UL</th>
 													<th>Total</th>
 												</tr>
-												
+
 											</thead>
-											
+
 											<tbody>
-												
+
 												<tr>
 													<td>Leave Due</td>
 													<?php
@@ -207,7 +204,8 @@
 													<td><?php echo $result8; ?></td>
 
 
-													<td><?php echo $result1+$result2+$result3+$result4+$result5+$result6+$result7+$result8; ?></td>
+													<td><?php echo $result1 + $result2 + $result3 + $result4 + $result5 + $result6 + $result7 + $result8; ?>
+													</td>
 												</tr>
 												<tr>
 													<td>Leave Requested For</td>
@@ -261,7 +259,8 @@
 													<td><?php echo $result8; ?></td>
 
 
-													<td><?php echo $result1+$result2+$result3+$result4+$result5+$result6+$result7+$result8; ?></td>
+													<td><?php echo $result1 + $result2 + $result3 + $result4 + $result5 + $result6 + $result7 + $result8; ?>
+													</td>
 												</tr>
 												<tr>
 													<td>Leave Balance</td>
@@ -315,234 +314,256 @@
 													<td><?php echo $result8; ?></td>
 
 
-													<td><?php echo $result1+$result2+$result3+$result4+$result5+$result6+$result7+$result8; ?></td>
+													<td><?php echo $result1 + $result2 + $result3 + $result4 + $result5 + $result6 + $result7 + $result8; ?>
+													</td>
 												</tr>
-												
+
 											</tbody>
-											
+
 										</table>
-										
+
 									</div>
-								
+
 								</form>
-								
-								<form class="col-md-6 form-horizontal" role="form" action="" method="" >
-									
+
+								<form class="col-md-6 form-horizontal" role="form" action="" method="">
+
 									<?php
 									$objUser = new User();
 									$resultForUser = $objUser->getUserInformation();
-									while($rowForUser = mysqli_fetch_array($resultForUser))
-									{
+									while ($rowForUser = mysqli_fetch_array($resultForUser)) {
 									?>
-									
-									<div class="form-group col-md-12">
-									
-										<label class="col-sm-6 control-label" for="userName">User Name: </label>
-										<div class="col-sm-6">
-											<p class="form-control-static"><?php echo $rowForUser['eFirstName']." ".$rowForUser['eLastName']; ?></p>
-										</div>
-										
-										<label class="col-sm-6 control-label" for="userOfficeCode">User Office Code: </label>
-										<div class="col-sm-6">
-											<p class="form-control-static"><?php echo $rowForUser['eEmployeeCodeNumber']; ?></p>
-										</div>
-										
-										<label class="col-sm-6 control-label" for="userDpt">User Department: </label>
-										<div class="col-sm-6">
-											<p class="form-control-static"><?php echo $rowForUser['dptName']; ?></p>
-										</div>
-										
-										<label class="col-sm-6 control-label" for="userDesi">User Designation: </label>
-										<div class="col-sm-6">
-											<p class="form-control-static"><?php echo $rowForUser['desiDesignationName']; ?></p>
-										</div>
-										
-										<label class="col-sm-6 control-label" for="userDoB">User DoB: </label>
-										<div class="col-sm-6">
-											<p class="form-control-static"><?php echo $rowForUser['eDateOfBirth']; ?></p>
-										</div>
-										
-										<label class="col-sm-6 control-label" for="userGender">User Gender: </label>
-										<div class="col-sm-6">
-											<p class="form-control-static"><?php echo $rowForUser['eGender']; ?></p>
-										</div>
-										
-										<label class="col-sm-6 control-label" for="userBlood">User Blood Group: </label>
-										<div class="col-sm-6">
-											<p class="form-control-static"><?php echo $rowForUser['bName']; ?></p>
-										</div>
-										
-										<label class="col-sm-6 control-label" for="userEmail">User Email Address: </label>
-										<div class="col-sm-6">
-											<p class="form-control-static"><?php echo $rowForUser['eEmailAddress']; ?></p>
-										</div>
-										
-										<label class="col-sm-6 control-label" for="userOfficePhoneNumber">User Office Phone Number: </label>
-										<div class="col-sm-6">
-											<p class="form-control-static"><?php echo $rowForUser['ePhoneNumberOffice']; ?></p>
-										</div>
-									
-										<label class="col-sm-6 control-label" for="userPermanentAddress">User Permanent Address: </label>
-										<div class="col-sm-6">
-											<p class="form-control-static"><?php echo $rowForUser['eParmanentAddress']; ?></p>
+
+										<div class="form-group  col-md-12">
+
+											<label class="col-sm-6 control-label" for="userName">User Name: </label>
+											<div class="col-sm-6">
+												<p class="form-control-static">
+													<?php echo $rowForUser['eFirstName'] . " " . $rowForUser['eLastName']; ?></p>
+											</div>
+
+											<label class="col-sm-6 control-label" for="userOfficeCode">User Office Code: </label>
+											<div class="col-sm-6">
+												<p class="form-control-static"><?php echo $rowForUser['eEmployeeCodeNumber']; ?></p>
+											</div>
+
+											<label class="col-sm-6 control-label" for="userDpt">User Department: </label>
+											<div class="col-sm-6">
+												<p class="form-control-static"><?php echo $rowForUser['dptName']; ?></p>
+											</div>
+
+											<label class="col-sm-6 control-label" for="userDesi">User Designation: </label>
+											<div class="col-sm-6">
+												<p class="form-control-static"><?php echo $rowForUser['desiDesignationName']; ?></p>
+											</div>
+
+											<label class="col-sm-6 control-label" for="userDoB">User DoB: </label>
+											<div class="col-sm-6">
+												<p class="form-control-static"><?php echo $rowForUser['eDateOfBirth']; ?></p>
+											</div>
+
+											<label class="col-sm-6 control-label" for="userGender">User Gender: </label>
+											<div class="col-sm-6">
+												<p class="form-control-static"><?php echo $rowForUser['eGender']; ?></p>
+											</div>
+
+											<label class="col-sm-6 control-label" for="userBlood">User Blood Group: </label>
+											<div class="col-sm-6">
+												<p class="form-control-static"><?php echo $rowForUser['bName']; ?></p>
+											</div>
+
+											<label class="col-sm-6 control-label" for="userEmail">User Email Address: </label>
+											<div class="col-sm-6">
+												<p class="form-control-static"><?php echo $rowForUser['eEmailAddress']; ?></p>
+											</div>
+
+											<label class="col-sm-6 control-label" for="userOfficePhoneNumber">User Office Phone
+												Number: </label>
+											<div class="col-sm-6">
+												<p class="form-control-static"><?php echo $rowForUser['ePhoneNumberOffice']; ?></p>
+											</div>
+
+											<label class="col-sm-6 control-label" for="userPermanentAddress">User Permanent Address:
+											</label>
+											<div class="col-sm-6">
+												<p class="form-control-static"><?php echo $rowForUser['eParmanentAddress']; ?></p>
+											</div>
+
 										</div>
 
-									</div>
-									
 									<?php
 									}
 									?>
-									
+
 								</form>
-								
-								<form class="col-md-6 form-horizontal" role="form" action="../controller/UserController.php" method="post">
-									
+
+								<form class="col-md-6 form-horizontal" role="form" action="../controller/UserController.php"
+									method="post">
+
 									<?php
-										
-										if(isset($_SESSION['UserInfoUpdated']))
-										{
-											if($_SESSION['UserInfoUpdated'] == 1)
-											{
-												UNSET($_SESSION['UserInfoUpdated']);
-												
-												$objUser = new User();
-												$resultForUser = $objUser->getUserInformation();
-												while($rowForUser = mysqli_fetch_array($resultForUser))
-												{
-												?>
-												
-												<h3 style="color:green" align="center">Successfully Updated</h3>
-									
-												<div class="form-group">
-											
-													<label class="col-sm-6 control-label" for="userPersonalPhoneNumber">User Personal Phone Number: </label>
-													<div class="col-sm-6">
-														<input type="text" class="form-control" value="<?php echo $rowForUser['ePhoneNumberPersonal']; ?>" name="userPersonalPhoneNumber" id="userPersonalPhoneNumber" required>
-													</div>
-													
-												</div>
-												
-												<div class="form-group">
-											
-													<label class="col-sm-6 control-label" for="userPresentAddress">User Present Address: </label>
-													<div class="col-sm-6">
-														<input type="text" class="form-control" value="<?php echo $rowForUser['ePresentAddress']; ?>" name="userPresentAddress" id="userPresentAddress" required>
-													</div>
-													
-												</div>
-												
-												<div class="form-group">
-											
-													<label class="col-sm-6 control-label" for="userPassword">User Password: </label>
-													<div class="col-sm-6">
-														<input type="password" class="form-control" value="<?php echo $rowForUser['ePassword']; ?>" name="userPassword" id="userPassword" required>
-													</div>
-													
-												</div>
-												
-												<?php
-												}
-												?>
-												
-												<h3 align="center"><button type="submit" name="btnUserInfoUpdate" class="btn btn-success">Update</button></h3>
-												<?php
-											}
-											else
-											{
-												UNSET($_SESSION['UserInfoUpdated']);
-												
-												$objUser = new User();
-												$resultForUser = $objUser->getUserInformation();
-												while($rowForUser = mysqli_fetch_array($resultForUser))
-												{
-												?>
-												
-												<h4 style="color:red" align="center">Update Not Successfull, Please Try Again</h4>
-									
-												<div class="form-group">
-											
-													<label class="col-sm-6 control-label" for="userPersonalPhoneNumber">User Personal Phone Number: </label>
-													<div class="col-sm-6">
-														<input type="text" class="form-control" value="<?php echo $rowForUser['ePhoneNumberPersonal']; ?>" name="userPersonalPhoneNumber" id="userPersonalPhoneNumber" required>
-													</div>
-													
-												</div>
-												
-												<div class="form-group">
-											
-													<label class="col-sm-6 control-label" for="userPresentAddress">User Present Address: </label>
-													<div class="col-sm-6">
-														<input type="text" class="form-control" value="<?php echo $rowForUser['ePresentAddress']; ?>" name="userPresentAddress" id="userPresentAddress" required>
-													</div>
-													
-												</div>
-												
-												<div class="form-group">
-											
-													<label class="col-sm-6 control-label" for="userPassword">User Password: </label>
-													<div class="col-sm-6">
-														<input type="password" class="form-control" value="<?php echo $rowForUser['ePassword']; ?>" name="userPassword" id="userPassword" required>
-													</div>
-													
-												</div>
-												
-												<?php
-												}
-												?>
-												
-												<h3 align="center"><button type="submit" name="btnUserInfoUpdate" class="btn btn-success">Update</button></h3>
-												<?php
-											}
-										}
-										else
-										{
+
+									if (isset($_SESSION['UserInfoUpdated'])) {
+										if ($_SESSION['UserInfoUpdated'] == 1) {
+											unset($_SESSION['UserInfoUpdated']);
+
 											$objUser = new User();
 											$resultForUser = $objUser->getUserInformation();
-											while($rowForUser = mysqli_fetch_array($resultForUser))
-											{
-											?>
-												
-											<h3 align="center">Update Your Current Information</h3>
-								
-											<div class="form-group">
-										
-												<label class="col-sm-6 control-label" for="userPersonalPhoneNumber">User Personal Phone Number: </label>
-												<div class="col-sm-6">
-													<input type="text" class="form-control" value="<?php echo $rowForUser['ePhoneNumberPersonal']; ?>" name="userPersonalPhoneNumber" id="userPersonalPhoneNumber" required>
+											while ($rowForUser = mysqli_fetch_array($resultForUser)) {
+									?>
+
+												<h3 style="color:green" align="center">Successfully Updated</h3>
+
+												<div class="form-group">
+
+													<label class="col-sm-6 control-label" for="userPersonalPhoneNumber">User Personal Phone
+														Number: </label>
+													<div class="col-sm-6">
+														<input type="text" class="form-control"
+															value="<?php echo $rowForUser['ePhoneNumberPersonal']; ?>"
+															name="userPersonalPhoneNumber" id="userPersonalPhoneNumber" required>
+													</div>
+
 												</div>
-												
-											</div>
-											
-											<div class="form-group">
-										
-												<label class="col-sm-6 control-label" for="userPresentAddress">User Present Address: </label>
-												<div class="col-sm-6">
-													<input type="text" class="form-control" value="<?php echo $rowForUser['ePresentAddress']; ?>" name="userPresentAddress" id="userPresentAddress" required>
+
+												<div class="form-group">
+
+													<label class="col-sm-6 control-label" for="userPresentAddress">User Present Address:
+													</label>
+													<div class="col-sm-6">
+														<input type="text" class="form-control"
+															value="<?php echo $rowForUser['ePresentAddress']; ?>" name="userPresentAddress"
+															id="userPresentAddress" required>
+													</div>
+
 												</div>
-												
-											</div>
-											
-											<div class="form-group">
-										
-												<label class="col-sm-6 control-label" for="userPassword">User Password: </label>
-												<div class="col-sm-6">
-													<input type="password" class="form-control" value="<?php echo $rowForUser['ePassword']; ?>" name="userPassword" id="userPassword" required>
+
+												<div class="form-group">
+
+													<label class="col-sm-6 control-label" for="userPassword">User Password: </label>
+													<div class="col-sm-6">
+														<input type="password" class="form-control"
+															value="<?php echo $rowForUser['ePassword']; ?>" name="userPassword"
+															id="userPassword" required>
+													</div>
+
 												</div>
-												
-											</div>
-											
+
 											<?php
 											}
 											?>
-											
-											<h3 align="center"><button type="submit" name="btnUserInfoUpdate" class="btn btn-success">Update</button></h3>
+
+											<h3 align="center"><button type="submit" name="btnUserInfoUpdate"
+													class="btn btn-success">Update</button></h3>
 											<?php
+										} else {
+											unset($_SESSION['UserInfoUpdated']);
+
+											$objUser = new User();
+											$resultForUser = $objUser->getUserInformation();
+											while ($rowForUser = mysqli_fetch_array($resultForUser)) {
+											?>
+
+												<h4 style="color:red" align="center">Update Not Successfull, Please Try Again</h4>
+
+												<div class="form-group">
+
+													<label class="col-sm-6 control-label" for="userPersonalPhoneNumber">User Personal Phone
+														Number: </label>
+													<div class="col-sm-6">
+														<input type="text" class="form-control"
+															value="<?php echo $rowForUser['ePhoneNumberPersonal']; ?>"
+															name="userPersonalPhoneNumber" id="userPersonalPhoneNumber" required>
+													</div>
+
+												</div>
+
+												<div class="form-group">
+
+													<label class="col-sm-6 control-label" for="userPresentAddress">User Present Address:
+													</label>
+													<div class="col-sm-6">
+														<input type="text" class="form-control"
+															value="<?php echo $rowForUser['ePresentAddress']; ?>" name="userPresentAddress"
+															id="userPresentAddress" required>
+													</div>
+
+												</div>
+
+												<div class="form-group">
+
+													<label class="col-sm-6 control-label" for="userPassword">User Password: </label>
+													<div class="col-sm-6">
+														<input type="password" class="form-control"
+															value="<?php echo $rowForUser['ePassword']; ?>" name="userPassword"
+															id="userPassword" required>
+													</div>
+
+												</div>
+
+											<?php
+											}
+											?>
+
+											<h3 align="center"><button type="submit" name="btnUserInfoUpdate"
+													class="btn btn-success">Update</button></h3>
+										<?php
 										}
-										
+									} else {
+										$objUser = new User();
+										$resultForUser = $objUser->getUserInformation();
+										while ($rowForUser = mysqli_fetch_array($resultForUser)) {
+										?>
+
+											<h3 align="center">Update Your Current Information</h3>
+
+											<div class="form-group">
+
+												<label class="col-sm-6 control-label" for="userPersonalPhoneNumber">User Personal Phone
+													Number: </label>
+												<div class="col-sm-6">
+													<input type="text" class="form-control"
+														value="<?php echo $rowForUser['ePhoneNumberPersonal']; ?>"
+														name="userPersonalPhoneNumber" id="userPersonalPhoneNumber" required>
+												</div>
+
+											</div>
+
+											<div class="form-group">
+
+												<label class="col-sm-6 control-label" for="userPresentAddress">User Present Address:
+												</label>
+												<div class="col-sm-6">
+													<input type="text" class="form-control"
+														value="<?php echo $rowForUser['ePresentAddress']; ?>" name="userPresentAddress"
+														id="userPresentAddress" required>
+												</div>
+
+											</div>
+
+											<div class="form-group">
+
+												<label class="col-sm-6 control-label" for="userPassword">User Password: </label>
+												<div class="col-sm-6">
+													<input type="password" class="form-control"
+														value="<?php echo $rowForUser['ePassword']; ?>" name="userPassword"
+														id="userPassword" required>
+												</div>
+
+											</div>
+
+										<?php
+										}
+										?>
+
+										<h3 align="center"><button type="submit" name="btnUserInfoUpdate"
+												class="btn btn-success">Update</button></h3>
+									<?php
+									}
+
 									?>
-									
+
 								</form>
-								
+
 							</div>
 						</div>
 					</div>
@@ -560,22 +581,20 @@
 
 			<!-- Menu Toggle Script -->
 			<script>
-			$("#menu-toggle").click(function(e) {
-				e.preventDefault();
-				$("#wrapper").toggleClass("toggled");
-			});
+				$("#menu-toggle").click(function(e) {
+					e.preventDefault();
+					$("#wrapper").toggleClass("toggled");
+				});
 			</script>
 
 		</body>
 
 		</html>
-<?php
+	<?php
 
-	}
-	else
-	{
-		?>
-		
+	} else {
+	?>
+
 		<!DOCTYPE html>
 		<html lang="en">
 
@@ -596,7 +615,8 @@
 			<link href="../assets/css/simple-sidebar.css" rel="stylesheet">
 
 			<!-- Online FA CDN -->
-			<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+			<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+				integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
 
 			<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 			<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -604,15 +624,12 @@
 				<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
 				<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
 			<![endif]-->
-			
+
 			<script language=JavaScript>
-				
-				function reload(form)
-					{
-						var val=form.cat.options[form.cat.options.selectedIndex].value;
-						self.location='ListDesignation.php?cat=' + val ;
-					}
-					
+				function reload(form) {
+					var val = form.cat.options[form.cat.options.selectedIndex].value;
+					self.location = 'ListDesignation.php?cat=' + val;
+				}
 			</script>
 
 		</head>
@@ -648,27 +665,27 @@
 					<div class="container-fluid">
 						<div class="row">
 							<div class="col-lg-12">
-							
-								<a href="#menu-toggle" class="btn btn-primary" id="menu-toggle"><i class="fas fa-exchange-alt"></i> Menu Bar</a>
+
+								<a href="#menu-toggle" class="btn btn-primary" id="menu-toggle"><i
+										class="fas fa-exchange-alt"></i> Menu Bar</a>
 								<h1 align="center">User Profile</h1>
-								
+
 								<form class="form-group" role="form" action="../controller/UserController.php" method="post">
-									
+
 									<?php
 									$objLeaveApplication = new User();
 									$livHistory = $objLeaveApplication->getAllleaveHistory();
-									while($historyForLeave = mysqli_fetch_array($livHistory))
-									{
-										echo "<br/><span style='color:#DAA520;' class='glyphicon glyphicon-road'></span> You were in Leave from <b style='color:#DAA520;'>".$historyForLeave['lLeaveFromDate']."</b> To <b style='color:#DAA520;'>".$historyForLeave['lLeaveToDate']."</b>. Total <b style='color:#DAA520;'>".$historyForLeave['lTotalLeaveDays']."</b> Days.<br/>";
+									while ($historyForLeave = mysqli_fetch_array($livHistory)) {
+										echo "<br/><span style='color:#DAA520;' class='glyphicon glyphicon-road'></span> You were on Leave from <b style='color:#DAA520;'>" . $historyForLeave['lLeaveFromDate'] . "</b> To <b style='color:#DAA520;'>" . $historyForLeave['lLeaveToDate'] . "</b>. Total <b style='color:#DAA520;'>" . $historyForLeave['lTotalLeaveDays'] . "</b> Days.<br/>";
 									}
 									?>
-									
+
 									<div class="table-responsive">
-									
+
 										<table class="table table-bordered table-hover table-striped">
-										
+
 											<thead>
-											
+
 												<tr class="success">
 													<th>Leave Name</th>
 													<th>CL</th>
@@ -681,11 +698,11 @@
 													<th>UL</th>
 													<th>Total</th>
 												</tr>
-												
+
 											</thead>
-											
+
 											<tbody>
-												
+
 												<tr>
 													<td>Leave Due</td>
 													<?php
@@ -738,7 +755,8 @@
 													<td><?php echo $result8; ?></td>
 
 
-													<td><?php echo $result1+$result2+$result3+$result4+$result5+$result6+$result7+$result8; ?></td>
+													<td><?php echo $result1 + $result2 + $result3 + $result4 + $result5 + $result6 + $result7 + $result8; ?>
+													</td>
 												</tr>
 												<tr>
 													<td>Leave Requested For</td>
@@ -792,7 +810,8 @@
 													<td><?php echo $result8; ?></td>
 
 
-													<td><?php echo $result1+$result2+$result3+$result4+$result5+$result6+$result7+$result8; ?></td>
+													<td><?php echo $result1 + $result2 + $result3 + $result4 + $result5 + $result6 + $result7 + $result8; ?>
+													</td>
 												</tr>
 												<tr>
 													<td>Leave Balance</td>
@@ -846,234 +865,256 @@
 													<td><?php echo $result8; ?></td>
 
 
-													<td><?php echo $result1+$result2+$result3+$result4+$result5+$result6+$result7+$result8; ?></td>
+													<td><?php echo $result1 + $result2 + $result3 + $result4 + $result5 + $result6 + $result7 + $result8; ?>
+													</td>
 												</tr>
-												
+
 											</tbody>
-											
+
 										</table>
-										
+
 									</div>
-								
+
 								</form>
-								
-								<form class="col-md-6 form-horizontal" role="form" action="" method="" >
-									
+
+								<form class="col-md-6 form-horizontal" role="form" action="" method="">
+
 									<?php
 									$objUser = new User();
 									$resultForUser = $objUser->getUserInformation();
-									while($rowForUser = mysqli_fetch_array($resultForUser))
-									{
+									while ($rowForUser = mysqli_fetch_array($resultForUser)) {
 									?>
-									
-									<div class="form-group col-md-12">
-									
-										<label class="col-sm-6 control-label" for="userName">User Name: </label>
-										<div class="col-sm-6">
-											<p class="form-control-static"><?php echo $rowForUser['eFirstName']." ".$rowForUser['eLastName']; ?></p>
-										</div>
-										
-										<label class="col-sm-6 control-label" for="userOfficeCode">User Office Code: </label>
-										<div class="col-sm-6">
-											<p class="form-control-static"><?php echo $rowForUser['eEmployeeCodeNumber']; ?></p>
-										</div>
-										
-										<label class="col-sm-6 control-label" for="userDpt">User Department: </label>
-										<div class="col-sm-6">
-											<p class="form-control-static"><?php echo $rowForUser['dptName']; ?></p>
-										</div>
-										
-										<label class="col-sm-6 control-label" for="userDesi">User Designation: </label>
-										<div class="col-sm-6">
-											<p class="form-control-static"><?php echo $rowForUser['desiDesignationName']; ?></p>
-										</div>
-										
-										<label class="col-sm-6 control-label" for="userDoB">User DoB: </label>
-										<div class="col-sm-6">
-											<p class="form-control-static"><?php echo $rowForUser['eDateOfBirth']; ?></p>
-										</div>
-										
-										<label class="col-sm-6 control-label" for="userGender">User Gender: </label>
-										<div class="col-sm-6">
-											<p class="form-control-static"><?php echo $rowForUser['eGender']; ?></p>
-										</div>
-										
-										<label class="col-sm-6 control-label" for="userBlood">User Blood Group: </label>
-										<div class="col-sm-6">
-											<p class="form-control-static"><?php echo $rowForUser['bName']; ?></p>
-										</div>
-										
-										<label class="col-sm-6 control-label" for="userEmail">User Email Address: </label>
-										<div class="col-sm-6">
-											<p class="form-control-static"><?php echo $rowForUser['eEmailAddress']; ?></p>
-										</div>
-										
-										<label class="col-sm-6 control-label" for="userOfficePhoneNumber">User Office Phone Number: </label>
-										<div class="col-sm-6">
-											<p class="form-control-static"><?php echo $rowForUser['ePhoneNumberOffice']; ?></p>
-										</div>
-									
-										<label class="col-sm-6 control-label" for="userPermanentAddress">User Permanent Address: </label>
-										<div class="col-sm-6">
-											<p class="form-control-static"><?php echo $rowForUser['eParmanentAddress']; ?></p>
+
+										<div class="form-group col-md-12">
+
+											<label class="col-sm-6 control-label" for="userName">User Name: </label>
+											<div class="col-sm-6">
+												<p class="form-control-static">
+													<?php echo $rowForUser['eFirstName'] . " " . $rowForUser['eLastName']; ?></p>
+											</div>
+
+											<label class="col-sm-6 control-label" for="userOfficeCode">User Office Code: </label>
+											<div class="col-sm-6">
+												<p class="form-control-static"><?php echo $rowForUser['eEmployeeCodeNumber']; ?></p>
+											</div>
+
+											<label class="col-sm-6 control-label" for="userDpt">User Department: </label>
+											<div class="col-sm-6">
+												<p class="form-control-static"><?php echo $rowForUser['dptName']; ?></p>
+											</div>
+
+											<label class="col-sm-6 control-label" for="userDesi">User Designation: </label>
+											<div class="col-sm-6">
+												<p class="form-control-static"><?php echo $rowForUser['desiDesignationName']; ?></p>
+											</div>
+
+											<label class="col-sm-6 control-label" for="userDoB">User DoB: </label>
+											<div class="col-sm-6">
+												<p class="form-control-static"><?php echo $rowForUser['eDateOfBirth']; ?></p>
+											</div>
+
+											<label class="col-sm-6 control-label" for="userGender">User Gender: </label>
+											<div class="col-sm-6">
+												<p class="form-control-static"><?php echo $rowForUser['eGender']; ?></p>
+											</div>
+
+											<label class="col-sm-6 control-label" for="userBlood">User Blood Group: </label>
+											<div class="col-sm-6">
+												<p class="form-control-static"><?php echo $rowForUser['bName']; ?></p>
+											</div>
+
+											<label class="col-sm-6 control-label" for="userEmail">User Email Address: </label>
+											<div class="col-sm-6">
+												<p class="form-control-static"><?php echo $rowForUser['eEmailAddress']; ?></p>
+											</div>
+
+											<label class="col-sm-6 control-label" for="userOfficePhoneNumber">User Office Phone
+												Number: </label>
+											<div class="col-sm-6">
+												<p class="form-control-static"><?php echo $rowForUser['ePhoneNumberOffice']; ?></p>
+											</div>
+
+											<label class="col-sm-6 control-label" for="userPermanentAddress">User Permanent Address:
+											</label>
+											<div class="col-sm-6">
+												<p class="form-control-static"><?php echo $rowForUser['eParmanentAddress']; ?></p>
+											</div>
+
 										</div>
 
-									</div>
-									
 									<?php
 									}
 									?>
-									
+
 								</form>
-								
-								<form class="col-md-6 form-horizontal" role="form" action="../controller/UserController.php" method="post">
-									
+
+								<form class="col-md-6 form-horizontal" role="form" action="../controller/UserController.php"
+									method="post">
+
 									<?php
-										
-										if(isset($_SESSION['UserInfoUpdated']))
-										{
-											if($_SESSION['UserInfoUpdated'] == 1)
-											{
-												UNSET($_SESSION['UserInfoUpdated']);
-												
-												$objUser = new User();
-												$resultForUser = $objUser->getUserInformation();
-												while($rowForUser = mysqli_fetch_array($resultForUser))
-												{
-												?>
-												
-												<h3 style="color:green" align="center">Successfully Updated</h3>
-									
-												<div class="form-group">
-											
-													<label class="col-sm-6 control-label" for="userPersonalPhoneNumber">User Personal Phone Number: </label>
-													<div class="col-sm-6">
-														<input type="text" class="form-control" value="<?php echo $rowForUser['ePhoneNumberPersonal']; ?>" name="userPersonalPhoneNumber" id="userPersonalPhoneNumber" required>
-													</div>
-													
-												</div>
-												
-												<div class="form-group">
-											
-													<label class="col-sm-6 control-label" for="userPresentAddress">User Present Address: </label>
-													<div class="col-sm-6">
-														<input type="text" class="form-control" value="<?php echo $rowForUser['ePresentAddress']; ?>" name="userPresentAddress" id="userPresentAddress" required>
-													</div>
-													
-												</div>
-												
-												<div class="form-group">
-											
-													<label class="col-sm-6 control-label" for="userPassword">User Password: </label>
-													<div class="col-sm-6">
-														<input type="password" class="form-control" value="<?php echo $rowForUser['ePassword']; ?>" name="userPassword" id="userPassword" required>
-													</div>
-													
-												</div>
-												
-												<?php
-												}
-												?>
-												
-												<h3 align="center"><button type="submit" name="btnUserInfoUpdate" class="btn btn-success">Update</button></h3>
-												<?php
-											}
-											else
-											{
-												UNSET($_SESSION['UserInfoUpdated']);
-												
-												$objUser = new User();
-												$resultForUser = $objUser->getUserInformation();
-												while($rowForUser = mysqli_fetch_array($resultForUser))
-												{
-												?>
-												
-												<h4 style="color:red" align="center">Update Not Successfull, Please Try Again</h4>
-									
-												<div class="form-group">
-											
-													<label class="col-sm-6 control-label" for="userPersonalPhoneNumber">User Personal Phone Number: </label>
-													<div class="col-sm-6">
-														<input type="text" class="form-control" value="<?php echo $rowForUser['ePhoneNumberPersonal']; ?>" name="userPersonalPhoneNumber" id="userPersonalPhoneNumber" required>
-													</div>
-													
-												</div>
-												
-												<div class="form-group">
-											
-													<label class="col-sm-6 control-label" for="userPresentAddress">User Present Address: </label>
-													<div class="col-sm-6">
-														<input type="text" class="form-control" value="<?php echo $rowForUser['ePresentAddress']; ?>" name="userPresentAddress" id="userPresentAddress" required>
-													</div>
-													
-												</div>
-												
-												<div class="form-group">
-											
-													<label class="col-sm-6 control-label" for="userPassword">User Password: </label>
-													<div class="col-sm-6">
-														<input type="password" class="form-control" value="<?php echo $rowForUser['ePassword']; ?>" name="userPassword" id="userPassword" required>
-													</div>
-													
-												</div>
-												
-												<?php
-												}
-												?>
-												
-												<h3 align="center"><button type="submit" name="btnUserInfoUpdate" class="btn btn-success">Update</button></h3>
-												<?php
-											}
-										}
-										else
-										{
+
+									if (isset($_SESSION['UserInfoUpdated'])) {
+										if ($_SESSION['UserInfoUpdated'] == 1) {
+											unset($_SESSION['UserInfoUpdated']);
+
 											$objUser = new User();
 											$resultForUser = $objUser->getUserInformation();
-											while($rowForUser = mysqli_fetch_array($resultForUser))
-											{
-											?>
-												
-											<h3 align="center">Update Your Current Information</h3>
-								
-											<div class="form-group">
-										
-												<label class="col-sm-6 control-label" for="userPersonalPhoneNumber">User Personal Phone Number: </label>
-												<div class="col-sm-6">
-													<input type="text" class="form-control" value="<?php echo $rowForUser['ePhoneNumberPersonal']; ?>" name="userPersonalPhoneNumber" id="userPersonalPhoneNumber" required>
+											while ($rowForUser = mysqli_fetch_array($resultForUser)) {
+									?>
+
+												<h3 style="color:green" align="center">Successfully Updated</h3>
+
+												<div class="form-group">
+
+													<label class="col-sm-6 control-label" for="userPersonalPhoneNumber">User Personal Phone
+														Number: </label>
+													<div class="col-sm-6">
+														<input type="text" class="form-control"
+															value="<?php echo $rowForUser['ePhoneNumberPersonal']; ?>"
+															name="userPersonalPhoneNumber" id="userPersonalPhoneNumber" required>
+													</div>
+
 												</div>
-												
-											</div>
-											
-											<div class="form-group">
-										
-												<label class="col-sm-6 control-label" for="userPresentAddress">User Present Address: </label>
-												<div class="col-sm-6">
-													<input type="text" class="form-control" value="<?php echo $rowForUser['ePresentAddress']; ?>" name="userPresentAddress" id="userPresentAddress" required>
+
+												<div class="form-group">
+
+													<label class="col-sm-6 control-label" for="userPresentAddress">User Present Address:
+													</label>
+													<div class="col-sm-6">
+														<input type="text" class="form-control"
+															value="<?php echo $rowForUser['ePresentAddress']; ?>" name="userPresentAddress"
+															id="userPresentAddress" required>
+													</div>
+
 												</div>
-												
-											</div>
-											
-											<div class="form-group">
-										
-												<label class="col-sm-6 control-label" for="userPassword">User Password: </label>
-												<div class="col-sm-6">
-													<input type="password" class="form-control" value="<?php echo $rowForUser['ePassword']; ?>" name="userPassword" id="userPassword" required>
+
+												<div class="form-group">
+
+													<label class="col-sm-6 control-label" for="userPassword">User Password: </label>
+													<div class="col-sm-6">
+														<input type="password" class="form-control"
+															value="<?php echo $rowForUser['ePassword']; ?>" name="userPassword"
+															id="userPassword" required>
+													</div>
+
 												</div>
-												
-											</div>
-											
+
 											<?php
 											}
 											?>
-											
-											<h3 align="center"><button type="submit" name="btnUserInfoUpdate" class="btn btn-success">Update</button></h3>
+
+											<h3 align="center"><button type="submit" name="btnUserInfoUpdate"
+													class="btn btn-success">Update</button></h3>
 											<?php
+										} else {
+											unset($_SESSION['UserInfoUpdated']);
+
+											$objUser = new User();
+											$resultForUser = $objUser->getUserInformation();
+											while ($rowForUser = mysqli_fetch_array($resultForUser)) {
+											?>
+
+												<h4 style="color:red" align="center">Update Not Successfull, Please Try Again</h4>
+
+												<div class="form-group">
+
+													<label class="col-sm-6 control-label" for="userPersonalPhoneNumber">User Personal Phone
+														Number: </label>
+													<div class="col-sm-6">
+														<input type="text" class="form-control"
+															value="<?php echo $rowForUser['ePhoneNumberPersonal']; ?>"
+															name="userPersonalPhoneNumber" id="userPersonalPhoneNumber" required>
+													</div>
+
+												</div>
+
+												<div class="form-group">
+
+													<label class="col-sm-6 control-label" for="userPresentAddress">User Present Address:
+													</label>
+													<div class="col-sm-6">
+														<input type="text" class="form-control"
+															value="<?php echo $rowForUser['ePresentAddress']; ?>" name="userPresentAddress"
+															id="userPresentAddress" required>
+													</div>
+
+												</div>
+
+												<div class="form-group">
+
+													<label class="col-sm-6 control-label" for="userPassword">User Password: </label>
+													<div class="col-sm-6">
+														<input type="password" class="form-control"
+															value="<?php echo $rowForUser['ePassword']; ?>" name="userPassword"
+															id="userPassword" required>
+													</div>
+
+												</div>
+
+											<?php
+											}
+											?>
+
+											<h3 align="center"><button type="submit" name="btnUserInfoUpdate"
+													class="btn btn-success">Update</button></h3>
+										<?php
 										}
-										
+									} else {
+										$objUser = new User();
+										$resultForUser = $objUser->getUserInformation();
+										while ($rowForUser = mysqli_fetch_array($resultForUser)) {
+										?>
+
+											<h3 align="center">Update Your Current Information</h3>
+
+											<div class="form-group">
+
+												<label class="col-sm-6 control-label" for="userPersonalPhoneNumber">User Personal Phone
+													Number: </label>
+												<div class="col-sm-6">
+													<input type="text" class="form-control"
+														value="<?php echo $rowForUser['ePhoneNumberPersonal']; ?>"
+														name="userPersonalPhoneNumber" id="userPersonalPhoneNumber" required>
+												</div>
+
+											</div>
+
+											<div class="form-group">
+
+												<label class="col-sm-6 control-label" for="userPresentAddress">User Present Address:
+												</label>
+												<div class="col-sm-6">
+													<input type="text" class="form-control"
+														value="<?php echo $rowForUser['ePresentAddress']; ?>" name="userPresentAddress"
+														id="userPresentAddress" required>
+												</div>
+
+											</div>
+
+											<div class="form-group">
+
+												<label class="col-sm-6 control-label" for="userPassword">User Password: </label>
+												<div class="col-sm-6">
+													<input type="password" class="form-control"
+														value="<?php echo $rowForUser['ePassword']; ?>" name="userPassword"
+														id="userPassword" required>
+												</div>
+
+											</div>
+
+										<?php
+										}
+										?>
+
+										<h3 align="center"><button type="submit" name="btnUserInfoUpdate"
+												class="btn btn-success">Update</button></h3>
+									<?php
+									}
+
 									?>
-									
+
 								</form>
-								
+
 							</div>
 						</div>
 					</div>
@@ -1091,21 +1132,19 @@
 
 			<!-- Menu Toggle Script -->
 			<script>
-			$("#menu-toggle").click(function(e) {
-				e.preventDefault();
-				$("#wrapper").toggleClass("toggled");
-			});
+				$("#menu-toggle").click(function(e) {
+					e.preventDefault();
+					$("#wrapper").toggleClass("toggled");
+				});
 			</script>
 
 		</body>
 
 		</html>
-		
-		<?php
+
+<?php
 	}
-	}
-	else
-	{
-		header("Location:../");
-	}
+} else {
+	header("Location:../");
+}
 ?>
