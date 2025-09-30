@@ -121,7 +121,7 @@ class DbOperation
 		$con = $objConnection->con;
 		$sql = "DELETE FROM " . $tablesName . " WHERE " . $conditions;
 		$result = mysqli_query($con, "DELETE FROM " . $tablesName . " WHERE " . $conditions);
-	// var_dump($sql); // Removed to prevent output before header()
+		// var_dump($sql); // Removed to prevent output before header()
 		//var_dump($result);
 		$objConnection->dbCloseConnection();
 		//var_dump($result);
