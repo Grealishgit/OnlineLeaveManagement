@@ -15,7 +15,7 @@ class DbOperation
 		$objConnection->dbConnection();
 		$con = $objConnection->con;
 		//$sql = "SELECT DISTINCT ".$columnsName." FROM ".$tablesName." WHERE ".$conditions;
-		$result = mysqli_query($con, "SELECT DISTINCT " . $columnsName . " FROM " . $tablesName . " WHERE " . $conditions);
+		$result = mysqli_query($con, "SELECT " . $columnsName . " FROM " . $tablesName . " WHERE " . $conditions);
 		//var_dump($sql);
 		//var_dump($result);
 		$objConnection->dbCloseConnection();

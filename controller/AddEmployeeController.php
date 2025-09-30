@@ -45,18 +45,19 @@
 		
 		$objEmployee = new Employee();
 		$verificationStatus = $objEmployee->dbEmpStatus($empUserId);
-		
-		while ($row = mysqli_fetch_array($verificationStatus))
-		{
-			if($row['eEmployeeVerification'] == 1)
-			{
+
+	if ($verificationStatus instanceof mysqli_result) {
+		while ($row = mysqli_fetch_array($verificationStatus)) {
+			if ($row['eEmployeeVerification'] == 1) {
 				$empVerification = 0;
-			}
-			else
-			{
+			} else {
 				$empVerification = 1;
 			}
 		}
+	} else {
+		// Handle query error
+		error_log('Query failed or returned no result in dbEmpStatus');
+	}
 		
 		//echo "<br/>Who Varify : ".$empWhoVerifytheEmployee."<br/> VarifyData : ".$empVerification."<br/> User : ".$empUserId;
 		
@@ -80,23 +81,25 @@
 		
 		$objEmployee = new Employee();
 		$empType = $objEmployee->dbEmpCoordinetorType($empUserId);
-		
-		while ($row = mysqli_fetch_array($empType))
-		{
-			if($row['eEmpType'] == 3)
-			{
-				$empType = 2;
+
+	$newEmpType = null;
+	if ($empType instanceof mysqli_result) {
+		while ($row = mysqli_fetch_array($empType)) {
+			if ($row['eEmpType'] == 3) {
+				$newEmpType = 2;
+			} else {
+				$newEmpType = 3;
 			}
-			else
-			{
-				$empType = 3;
 			}
+	} else {
+		// Handle query error
+		error_log('Query failed or returned no result in dbEmpCoordinetorType');
 		}
-		
-		//echo "<br/>Who Varify : ".$empWhoVerifytheEmployee."<br/> VarifyData : ".$empType."<br/> User : ".$empUserId;
-		
-		$objEmployeeForVerify = new Employee();
-		$objEmployeeForVerify->dbEmpTypeUpdate($empWhoVerifytheEmployee,$empUserId,$empType);
+
+	//echo "<br/>Who Varify : ".$empWhoVerifytheEmployee."<br/> VarifyData : ".$empType."<br/> User : ".$empUserId;
+
+	$objEmployeeForVerify = new Employee();
+	$objEmployeeForVerify->dbEmpTypeUpdate($empWhoVerifytheEmployee, $empUserId, $newEmpType);
 		
 		if($objEmployeeForVerify->CreatedOrNot)
 		{
